@@ -1,0 +1,22 @@
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: strY  
+        """
+        def expandFromCenter(leftPoint, rightPoint):
+            L = leftPoint
+            R = rightPoint
+            while L >= 0 and R < len(s) and s[L] == s[R]:
+                L-=1
+                R+=1
+            return R-L-1
+        start = end =0
+        for i in range(len(s)):
+            lenghOfOdd = expandFromCenter(i,i)
+            lenghOfEven = expandFromCenter(i,i+1)
+            lengthMax = max(lenghOfEven,lenghOfOdd)
+            if lengthMax > end-start:
+                start = i - int((lengthMax-1)/2)
+                end = i + int(lengthMax/2)
+        return s[start:end+1]
